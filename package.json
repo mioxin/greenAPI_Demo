@@ -1,5 +1,5 @@
 {
-  "homepage": "https://USERNAME.github.io/REPO",
+  "homepage": "https://mioxin.github.io/REPO",
   "scripts": {
     "deploy": "gh-pages -d dist"
   }
