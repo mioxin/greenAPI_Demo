@@ -1,3 +1,3 @@
 export default {
-  base: "/REPO/"
+  base: "/greenAPI_Demo/"
 }
