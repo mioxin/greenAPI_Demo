@@ -1,0 +1,6 @@
+{
+  "homepage": "https://USERNAME.github.io/REPO",
+  "scripts": {
+    "deploy": "gh-pages -d dist"
+  }
+}
