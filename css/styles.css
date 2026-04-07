@@ -38,6 +38,7 @@ input, textarea {
 
 textarea {
   height: 420px;
+  width: 90%;
   resize: none;
   background: #fff;
 }
