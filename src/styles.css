@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  gap: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.left {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.right {
+  flex: 1;
+}
+
+input, button {
+  padding: 10px;
+}
+
+.error {
+  color: red;
+}
