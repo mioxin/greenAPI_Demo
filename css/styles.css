@@ -13,7 +13,7 @@ body {
 }
 
 .left {
-  width: 280px;
+  width: 80px;
   display: flex;
   flex-direction: column;
   gap: 12px;
