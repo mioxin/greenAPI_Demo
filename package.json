@@ -1,5 +1,5 @@
 {
-  "homepage": "https://mioxin.github.io/REPO",
+  "homepage": "https://mioxin.github.io/greenAPI_Demo",
   "scripts": {
     "deploy": "gh-pages -d dist"
   }
