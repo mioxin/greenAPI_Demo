@@ -4,87 +4,13 @@
   <meta charset="UTF-8" />
   <title>GREEN API</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 20px;
-    }
-
-    .container {
-      display: flex;
-      gap: 20px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .left {
-      width: 280px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .right {
-      flex: 1;
-    }
-
-    .block {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    input, textarea {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    textarea {
-      height: 420px;
-      resize: none;
-      background: #fff;
-    }
-
-    button {
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      background: #4CAF50;
-      color: white;
-      cursor: pointer;
-      font-size: 14px;
-      transition: 0.2s;
-    }
-
-    button:hover {
-      background: #45a049;
-    }
-
-    button:disabled {
-      background: #aaa;
-      cursor: not-allowed;
-    }
-
-    .error {
-      color: red;
-      font-size: 12px;
-    }
-
-    h3 {
-      margin-top: 0;
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body>
 
 <div class="container">
 
-  <!-- LEFT -->
   <div class="left">
 
     <div class="block">
@@ -93,27 +19,26 @@
     </div>
 
     <div class="block">
-      <button onclick="getSettings()">getSettings</button>
-      <button onclick="getStateInstance()">getStateInstance</button>
+      <button id="btnGetSettings">getSettings</button>
+      <button id="btnGetState">getStateInstance</button>
     </div>
 
     <div class="block">
       <input id="phone" placeholder="77771234567" />
       <input id="message" placeholder="Hello World" />
-      <button onclick="sendMessage()">sendMessage</button>
+      <button id="btnSendMessage">sendMessage</button>
     </div>
 
     <div class="block">
       <input id="phoneFile" placeholder="77771234567" />
       <input id="fileUrl" placeholder="https://example.com/file.jpg" />
-      <button onclick="sendFileByUrl()">sendFileByUrl</button>
+      <button id="btnSendFile">sendFileByUrl</button>
     </div>
 
     <div id="error" class="error"></div>
 
   </div>
 
-  <!-- RIGHT -->
   <div class="right">
     <h3>Ответ:</h3>
     <textarea id="response" readonly></textarea>
@@ -121,115 +46,6 @@
 
 </div>
 
-<script>
-  const responseField = document.getElementById("response");
-  const errorField = document.getElementById("error");
-  const buttons = document.querySelectorAll("button");
-
-  function setLoading(isLoading) {
-    buttons.forEach(btn => btn.disabled = isLoading);
-    if (isLoading) {
-      responseField.value = "Loading...";
-    }
-  }
-
-  function showError(msg) {
-    errorField.innerText = msg;
-  }
-
-  function clearError() {
-    errorField.innerText = "";
-  }
-
-  function getBaseUrl() {
-    const id = document.getElementById("idInstance").value.trim();
-    if (!id) throw new Error("Введите idInstance");
-    return `https://api.green-api.com/waInstance${id}`;
-  }
-
-  function getToken() {
-    const token = document.getElementById("apiTokenInstance").value.trim();
-    if (!token) throw new Error("Введите ApiTokenInstance");
-    return token;
-  }
-
-  function setResponse(data) {
-    responseField.value = JSON.stringify(data, null, 2);
-  }
-
-  async function request(url, options = {}) {
-    try {
-      clearError();
-      setLoading(true);
-
-      const res = await fetch(url, options);
-
-      if (!res.ok) {
-        throw new Error(`HTTP ошибка: ${res.status}`);
-      }
-
-      const data = await res.json();
-      setResponse(data);
-
-    } catch (err) {
-      showError(err.message);
-      responseField.value = "Ошибка запроса";
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  function getSettings() {
-    const url = `${getBaseUrl()}/getSettings/${getToken()}`;
-    request(url);
-  }
-
-  function getStateInstance() {
-    const url = `${getBaseUrl()}/getStateInstance/${getToken()}`;
-    request(url);
-  }
-
-  function sendMessage() {
-    const phone = document.getElementById("phone").value.trim();
-    const message = document.getElementById("message").value.trim();
-
-    if (!phone || !message) {
-      return showError("Введите телефон и сообщение");
-    }
-
-    const url = `${getBaseUrl()}/sendMessage/${getToken()}`;
-
-    request(url, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        chatId: phone + "@c.us",
-        message: message
-      })
-    });
-  }
-
-  function sendFileByUrl() {
-    const phone = document.getElementById("phoneFile").value.trim();
-    const fileUrl = document.getElementById("fileUrl").value.trim();
-
-    if (!phone || !fileUrl) {
-      return showError("Введите телефон и URL файла");
-    }
-
-    const url = `${getBaseUrl()}/sendFileByUrl/${getToken()}`;
-
-    request(url, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        chatId: phone + "@c.us",
-        urlFile: fileUrl,
-        fileName: "file"
-      })
-    });
-  }
-</script>
-
+<script src="js/app.js"></script>
 </body>
 </html>
