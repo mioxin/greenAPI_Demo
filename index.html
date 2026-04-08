@@ -4,71 +4,41 @@
   <meta charset="UTF-8" />
   <title>GREEN API</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      margin: 20px;
-    }
-
-    .container {
-      display: flex;
-      gap: 20px;
-    }
-
-    .left {
-      width: 300px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .right {
-      flex: 1;
-    }
-
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-
-    textarea {
-      height: 400px;
-      resize: none;
-    }
-
-    button {
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body>
 
 <div class="container">
 
-  <!-- ЛЕВАЯ КОЛОНКА -->
   <div class="left">
 
-    <input id="idInstance" placeholder="idInstance" />
-    <input id="apiTokenInstance" placeholder="ApiTokenInstance" />
+    <div class="block">
+      <input id="idInstance" placeholder="idInstance" />
+      <input id="apiTokenInstance" placeholder="ApiTokenInstance" />
+    </div>
 
-    <button onclick="getSettings()">getSettings</button>
-    <button onclick="getStateInstance()">getStateInstance</button>
+    <div class="block">
+      <button id="btnGetSettings">getSettings</button>
+      <button id="btnGetState">getStateInstance</button>
+    </div>
 
-    <input id="phone" placeholder="77771234567" />
-    <input id="message" placeholder="Hello World" />
+    <div class="block">
+      <input id="phone" placeholder="77771234567" />
+      <input id="message" placeholder="Hello World" />
+      <button id="btnSendMessage">sendMessage</button>
+    </div>
 
-    <button onclick="sendMessage()">sendMessage</button>
+    <div class="block">
+      <input id="phoneFile" placeholder="77771234567" />
+      <input id="fileUrl" placeholder="https://example.com/file.jpg" />
+      <button id="btnSendFile">sendFileByUrl</button>
+    </div>
 
-    <input id="phoneFile" placeholder="77771234567" />
-    <input id="fileUrl" placeholder="https://my.site.com/img/horse.png" />
-
-    <button onclick="sendFileByUrl()">sendFileByUrl</button>
+    <div id="error" class="error"></div>
 
   </div>
 
-  <!-- ПРАВАЯ КОЛОНКА -->
   <div class="right">
     <h3>Ответ:</h3>
     <textarea id="response" readonly></textarea>
@@ -76,68 +46,6 @@
 
 </div>
 
-<script>
-  function getBaseUrl() {
-    const id = document.getElementById("idInstance").value;
-    return `https://api.green-api.com/waInstance${id}`;
-  }
-
-  function getToken() {
-    return document.getElementById("apiTokenInstance").value;
-  }
-
-  function setResponse(data) {
-    document.getElementById("response").value =
-      JSON.stringify(data, null, 2);
-  }
-
-  async function getSettings() {
-    const url = `${getBaseUrl()}/getSettings/${getToken()}`;
-    const res = await fetch(url);
-    setResponse(await res.json());
-  }
-
-  async function getStateInstance() {
-    const url = `${getBaseUrl()}/getStateInstance/${getToken()}`;
-    const res = await fetch(url);
-    setResponse(await res.json());
-  }
-
-  async function sendMessage() {
-    const url = `${getBaseUrl()}/sendMessage/${getToken()}`;
-    const phone = document.getElementById("phone").value;
-    const message = document.getElementById("message").value;
-
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        chatId: phone + "@c.us",
-        message: message
-      })
-    });
-
-    setResponse(await res.json());
-  }
-
-  async function sendFileByUrl() {
-    const url = `${getBaseUrl()}/sendFileByUrl/${getToken()}`;
-    const phone = document.getElementById("phoneFile").value;
-    const fileUrl = document.getElementById("fileUrl").value;
-
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        chatId: phone + "@c.us",
-        urlFile: fileUrl,
-        fileName: "file"
-      })
-    });
-
-    setResponse(await res.json());
-  }
-</script>
-
+<script src="js/app.js"></script>
 </body>
 </html>
